@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+function addToCartWithPopup(fishId, stock) {
+  const qty = prompt("Enter quantity (max " + stock + "):", "1");
+  if (!qty || qty < 1) return;
+
+  const clean = confirm("Would you like us to clean the fish for +₹100?");
+  
+  const form = document.createElement("form");
+  form.method = "post";
+  form.action = "{{ url_for('add_to_cart') }}";
+
+  const fid = document.createElement("input");
+  fid.type = "hidden"; fid.name = "fish_id"; fid.value = fishId;
+  form.appendChild(fid);
+
+  const q = document.createElement("input");
+  q.type = "hidden"; q.name = "quantity"; q.value = qty;
+  form.appendChild(q);
+
+  const c = document.createElement("input");
+  c.type = "hidden"; c.name = "clean"; c.value = clean ? "yes" : "no";
+  form.appendChild(c);
+
+  document.body.appendChild(form);
+  form.submit();
+}
+</script>
+
+<table class="table">
+  <tr><th>Name</th><th>Price</th><th>Stock</th><th>Add</th></tr>
+  {% for f in fish %}
+  <tr>
+    <td>{{ f.name }}</td><td>{{ f.price|inr }}</td><td>{{ f.stock }}</td>
+    <td>
+      {% if u and u.role == 'user' and f.stock > 0 %}
+        <button class="btn" onclick="addToCartWithPopup({{ f.id }}, {{ f.stock }})">
+          Add to cart
+        </button>
+      {% else %} - {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<a class="btn" href="{{ url_for('view_cart') }}">Go to Cart</a>
+{% endblock %}

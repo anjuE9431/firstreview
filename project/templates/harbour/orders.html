@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Orders</h2>
+<table class="table">
+ <tr>
+  <th>ID</th><th>Customer</th><th>Items</th><th>Status</th><th>Total</th><th>Assign Delivery</th>
+</tr>
+{% for o in orders %}
+  <tr>
+    <td>#{{ o.id }}</td>
+    <td>{{ o.user_name }}</td>
+    <td>
+  <ul>
+  {% for it in o["items"] %}
+    <li>
+      {{ it.name }} x{{ it.quantity }}
+      {% if it.clean %}
+        <strong style="color:gold;">(Cleaned)</strong>
+      {% else %}
+        <strong style="color:gold;">(Not Cleaned)</strong>
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</td>
+
+    <td>{{ o.status }}</td>
+    <td>{{ o.total_amount|inr }}</td>
+    <td>
+      <form method="post" class="inline">
+        <input type="hidden" name="order_id" value="{{ o.id }}">
+        <select name="delivery_user_id" required>
+          {% for d in deliveries %}
+            <option value="{{ d.id }}">{{ d.name }}</option>
+          {% endfor %}
+        </select>
+        <button class="btn">Assign</button>
+      </form>
+    </td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

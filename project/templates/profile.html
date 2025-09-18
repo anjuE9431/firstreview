@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Profile</h2>
+<form method="post" class="card">
+  <label>Name <input type="text" name="name" value="{{ user.name }}" required></label>
+  <label>Phone <input type="text" name="phone" value="{{ user.phone or '' }}"></label>
+  <label>Address <input type="text" name="address" value="{{ user.address or '' }}"></label>
+  <button class="btn" type="submit">Save</button>
+</form>
+{% endblock %}

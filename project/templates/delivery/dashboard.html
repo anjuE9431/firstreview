@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Deliveries</h2>
+<table class="table">
+  <tr>
+  <th>ID</th>
+  <th>Order</th>
+  <th>Customer</th>
+  <th>Phone</th>
+  <th>Address</th>
+  <th>Order Status</th>
+  <th>Delivery Status</th>
+  <th>Update</th>
+</tr>
+{% for x in items %}
+<tr>
+  <td>{{ x.id }}</td>
+  <td>#{{ x.order_id }} ({{ x.total_amount|inr }})</td>
+  <td>{{ x.customer_name }}</td>
+  <td>{{ x.customer_phone or '-' }}</td>
+  <td>{{ x.customer_address or '-' }}</td>
+  <td>{{ x.order_status }}</td>
+  <td>{{ x.status }}</td>
+  <td>
+    <form method="post" action="{{ url_for('delivery_update') }}" class="inline">
+      <input type="hidden" name="delivery_id" value="{{ x.id }}">
+      <select name="status">
+        <option value="assigned" {% if x.status=='assigned' %}selected{% endif %}>assigned</option>
+        <option value="picked_up" {% if x.status=='picked_up' %}selected{% endif %}>picked_up</option>
+        <option value="out_for_delivery" {% if x.status=='out_for_delivery' %}selected{% endif %}>out_for_delivery</option>
+        <option value="delivered" {% if x.status=='delivered' %}selected{% endif %}>delivered</option>
+      </select>
+      <button class="btn">Save</button>
+    </form>
+  </td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

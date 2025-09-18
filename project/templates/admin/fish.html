@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Manage Fish</h2>
+<form method="post" class="card">
+  <label>Name <input type="text" name="name" required></label>
+  <label>Price (₹) <input type="number" step="0.01" name="price" required></label>
+  <label>Stock <input type="number" name="stock" min="0" required></label>
+  <label>Harbour
+    <select name="harbour_id" required>
+      {% for h in harbours %}
+      <option value="{{ h.id }}">{{ h.name }} (#{{ h.id }})</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button class="btn" type="submit">Add Fish</button>
+</form>
+
+<table class="table">
+  <tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Harbour</th></tr>
+  {% for f in fish %}
+    <tr><td>{{ f.id }}</td><td>{{ f.name }}</td><td>{{ f.price|inr }}</td><td>{{ f.stock }}</td><td>{{ f.harbour_name }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

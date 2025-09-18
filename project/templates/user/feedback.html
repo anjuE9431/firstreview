@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Feedback</h2>
+<form method="post" class="card">
+  <label>Rating
+    <select name="rating" required>
+      <option value="5">5</option>
+      <option value="4">4</option>
+      <option value="3">3</option>
+      <option value="2">2</option>
+      <option value="1">1</option>
+    </select>
+  </label>
+  <label>Message <textarea name="message" rows="3"></textarea></label>
+  <button class="btn">Send</button>
+</form>
+<table class="table">
+  <tr><th>ID</th><th>Rating</th><th>Message</th><th>Date</th></tr>
+  {% for f in items %}
+  <tr><td>{{ f.id }}</td><td>{{ f.rating }}</td><td>{{ f.message or '' }}</td><td>{{ f.created_at }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

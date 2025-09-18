@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Update Stock</h2>
+<table class="table">
+  <tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Update</th></tr>
+  {% for f in fish %}
+    <tr>
+      <td>{{ f.id }}</td><td>{{ f.name }}</td><td>{{ f.price|inr }}</td><td>{{ f.stock }}</td>
+      <td>
+        <form method="post" class="inline">
+          <input type="hidden" name="fish_id" value="{{ f.id }}">
+          <input type="number" step="0.01" name="price" value="{{ f.price }}" required>
+          <input type="number" name="stock" value="{{ f.stock }}" required>
+          <button class="btn">Save</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}

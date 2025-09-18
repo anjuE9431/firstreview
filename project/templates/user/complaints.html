@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Complaints</h2>
+<form method="post" class="card">
+  <textarea name="message" rows="3" placeholder="Write your complaint..." required></textarea>
+  <button class="btn">Submit</button>
+</form>
+<table class="table">
+  <tr><th>ID</th><th>Message</th><th>Reply</th><th>Date</th></tr>
+  {% for c in items %}
+  <tr><td>{{ c.id }}</td><td>{{ c.message }}</td><td>{{ c.reply or '-' }}</td><td>{{ c.created_at }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

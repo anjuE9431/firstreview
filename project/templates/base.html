@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fish Market</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+<header class="nav">
+  <a href="{{ url_for('index') }}" class="brand">🐟 Fish Market</a>
+  <nav>
+    {% if u %}
+      <a href="{{ url_for('profile') }}">Profile</a>
+      {% if u.role == 'admin' %}<a href="{{ url_for('admin_dashboard') }}">Admin</a>{% endif %}
+      {% if u.role == 'harbour' %}<a href="{{ url_for('harbour_dashboard') }}">Harbour</a>{% endif %}
+      {% if u.role == 'user' %}<a href="{{ url_for('user_dashboard') }}">Shop</a>
+        <a href="{{ url_for('view_cart') }}">Cart</a>
+        <a href="{{ url_for('user_orders') }}">My Orders</a>
+      {% endif %}
+      {% if u.role == 'delivery' %}<a href="{{ url_for('delivery_dashboard') }}">Delivery</a>{% endif %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flash">
+      {% for cat,msg in messages %}
+      <li class="{{ cat }}">{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <small>© Fish Market</small>
+</footer>
+</body>
+</html>

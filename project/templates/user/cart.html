@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Cart</h2>
+{% if not items %}
+<p>Cart is empty.</p>
+{% else %}
+<table class="table">
+  <tr><th>Fish</th><th>Qty</th><th>Cleaning</th><th>Amount</th></tr>
+  {% for it in items %}
+  <tr>
+    <td>{{ it.fish.name }}</td>
+    <td>{{ it.qty }}</td>
+    <td>{{ 'Yes (+₹100)' if it.clean else 'No' }}</td>
+    <td>{{ it.amount|inr }}</td>
+  </tr>
+  {% endfor %}
+  <tr><th colspan="3" style="text-align:right">Total</th><th>{{ total|inr }}</th></tr>
+</table>
+<form method="post" action="{{ url_for('checkout') }}">
+  <button class="btn">Proceed to Checkout</button>
+</form>
+{% endif %}
+{% endblock %}

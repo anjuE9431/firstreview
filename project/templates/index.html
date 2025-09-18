@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Fresh fish, straight from the harbour 🐠</h1>
+  <p>This platform connects harbours and customers directly for fair pricing and fresh seafood.</p>
+  {% if not u %}
+    <p><a class="btn" href="{{ url_for('register') }}">Create an account</a> or <a class="btn" href="{{ url_for('login') }}">Log in</a></p>
+  {% else %}
+    <p>You're logged in as <b>{{ u.name }}</b> ({{ u.role }}). Go to your dashboard via the top menu.</p>
+  {% endif %}
+{% endblock %}

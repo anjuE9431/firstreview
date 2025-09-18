@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Feedback</h2>
+<table class="table">
+  <tr><th>ID</th><th>User</th><th>Rating</th><th>Message</th><th>Date</th></tr>
+  {% for x in items %}
+    <tr><td>{{ x.id }}</td><td>{{ x.user_name }}</td><td>{{ x.rating }}</td><td>{{ x.message or '' }}</td><td>{{ x.created_at }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

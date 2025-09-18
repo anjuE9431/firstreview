@@ -1,0 +1,106 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+body {
+  background: #f5f8fa;
+  color: #2d3436;
+}
+
+/* Navbar */
+.navbar {
+  background: #0984e3;
+  color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+}
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+/* Cards (Fish Items) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 25px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform .2s;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.card .info {
+  padding: 15px;
+}
+.card .info h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.card .info p {
+  color: #636e72;
+  font-size: 14px;
+}
+.card .info .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0984e3;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background: #0984e3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background .3s;
+}
+.btn:hover {
+  background: #74b9ff;
+}
+
+/* Tables (Dashboard) */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.table th, .table td {
+  padding: 12px;
+  border-bottom: 1px solid #dfe6e9;
+}
+.table th {
+  background: #74b9ff;
+  color: #fff;
+  text-align: left;
+}

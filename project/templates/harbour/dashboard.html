@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Harbour Dashboard</h2>
+{% if harbour %}
+<p><b>{{ harbour.name }}</b> — {{ harbour.location }}</p>
+<div class="grid">
+  <div class="card">Orders: <b>{{ orders_count }}</b></div>
+  <div class="card">Fish in stock: <b>{{ fish_count }}</b></div>
+  <div class="card">Boats: <b>{{ boats_count }}</b></div>
+</div>
+<a class="btn" href="{{ url_for('harbour_orders') }}">View Orders</a>
+<a class="btn" href="{{ url_for('harbour_stock') }}">Update Stock</a>
+{% else %}
+<p>No harbour profile found. Ask Admin to create it and link to your account.</p>
+{% endif %}
+{% endblock %}

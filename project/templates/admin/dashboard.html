@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="grid">
+  <div class="card">Users: <b>{{ users_count }}</b></div>
+  <div class="card">Harbours: <b>{{ harbours_count }}</b></div>
+  <div class="card">Fish Types: <b>{{ fish_count }}</b></div>
+  <div class="card">Orders: <b>{{ orders_count }}</b></div>
+</div>
+<div class="grid">
+  <a class="btn" href="{{ url_for('admin_users') }}">Manage Users</a>
+  <a class="btn" href="{{ url_for('admin_harbours') }}">Manage Harbours</a>
+  <a class="btn" href="{{ url_for('admin_boats') }}">Manage Boats</a>
+  <a class="btn" href="{{ url_for('admin_fish') }}">Manage Fish</a>
+  <a class="btn" href="{{ url_for('admin_feedback') }}">View Feedback</a>
+  <a class="btn" href="{{ url_for('admin_complaints') }}">Complaints & Reply</a>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Manage Boats</h2>
+<form method="post" class="card">
+  <label>Name <input type="text" name="name" required></label>
+  <label>Capacity <input type="number" name="capacity" min="0" value="0"></label>
+  <label>Harbour
+    <select name="harbour_id" required>
+      {% for h in harbour_list %}
+      <option value="{{ h.id }}">{{ h.name }} (#{{ h.id }})</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button class="btn" type="submit">Add Boat</button>
+</form>
+
+<table class="table">
+  <tr><th>ID</th><th>Name</th><th>Capacity</th><th>Harbour</th></tr>
+  {% for b in boats %}
+    <tr><td>{{ b.id }}</td><td>{{ b.name }}</td><td>{{ b.capacity }}</td><td>{{ b.harbour_name }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
+
