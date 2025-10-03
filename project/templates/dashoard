@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Top Navigation -->
+<div class="top-nav">
+    <h2>Admin Panel</h2>
+    <nav class="top-nav-links">
+        <ul>
+            <li><a href="{{ url_for('admin_dashboard') }}" class="{% if active=='dashboard' %}active{% endif %}">Dashboard</a></li>
+            <li><a href="{{ url_for('admin_users') }}" class="{% if active=='users' %}active{% endif %}">Manage Users</a></li>
+            <li><a href="{{ url_for('admin_boats') }}" class="{% if active=='boats' %}active{% endif %}">Manage Boats</a></li>
+            <li><a href="{{ url_for('admin_harbours') }}" class="{% if active=='harbours' %}active{% endif %}">Manage Harbours</a></li>
+            <li><a href="{{ url_for('admin_fish') }}" class="{% if active=='fish' %}active{% endif %}">Manage Fish</a></li>
+            <li><a href="{{ url_for('admin_deliveryboys') }}" class="{% if active=='delivery' %}active{% endif %}">Manage Delivery Boys</a></li>
+            <li><a href="{{ url_for('admin_feedback') }}" class="{% if active=='feedback' %}active{% endif %}">View Feedback</a></li>
+            <li><a href="{{ url_for('admin_complaints') }}" class="{% if active=='complaints' %}active{% endif %}">View Complaints</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="main-content">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <h2>⚓ Admin Dashboard</h2>
+        <p>Welcome back, Admin! Here’s today’s overview 📊</p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="grid stats-grid">
+        <div class="card stat users">
+            <span class="icon">👤</span>
+            <h3>{{ users_count }}</h3>
+            <p>Users</p>
+        </div>
+        <div class="card stat harbours">
+            <span class="icon">🏝️</span>
+            <h3>{{ harbours_count }}</h3>
+            <p>Harbours</p>
+        </div>
+        <div class="card stat fish">
+            <span class="icon">🐟</span>
+            <h3>{{ fish_count }}</h3>
+            <p>Fish Types</p>
+        </div>
+        <div class="card stat orders">
+            <span class="icon">📦</span>
+            <h3>{{ orders_count }}</h3>
+            <p>Orders</p>
+        </div>
+    </div>
+
+    <!-- AI / Features Section -->
+    <h3 class="section-title">🤖 AI Insights & Features</h3>
+    <div class="features-grid">
+        <div class="feature-card">
+            <img src="{{ url_for('static', filename='img/unnamed.png') }}" >
+            <h4>Predictive Analytics</h4>
+            <p>AI predicts trends in sales, inventory, and user behavior for smarter decisions.</p>
+        </div>
+        <div class="feature-card">
+            <img src="{{ url_for('static', filename='img/download.jpg')}}">
+            <h4>Stock Monitoring</h4>
+            <p>Monitor your fish stock levels in real-time and get notifications for low inventory.</p>
+        </div>
+        <div class="feature-card">
+            <img src="{{ url_for('static', filename='img/unnamed (1).png') }}" alt="Order Management">
+            <h4>Order Management</h4>
+            <p>Quick overview of orders, deliveries, and user engagement.</p>
+        </div>
+    </div>
+
+    <!-- Analytics / Bar Chart -->
+    <h3 class="section-title">📊 Analytics</h3>
+    <div class="bar-chart">
+        <div class="bar" style="--value: {{ users_count }};" data-label="Users"></div>
+        <div class="bar" style="--value: {{ harbours_count }};" data-label="Harbours"></div>
+        <div class="bar" style="--value: {{ fish_count }};" data-label="Fish Types"></div>
+        <div class="bar" style="--value: {{ orders_count }};" data-label="Orders"></div>
+    </div>
+</div>
+
+<!-- Styles -->
+<style>
+/* Body & Main Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin:0;
+    padding:0;
+    background-color:#f9f9f9;
+    color:#333;
+}
+
+/* Top Navigation - Centered */
+.top-nav {
+    width:100%;
+    background-color:#34495e;
+    color:white;
+    padding:1.5rem 2rem;
+    display:flex;
+    flex-direction: column; /* Stack title above links */
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.top-nav h2 { 
+    color:#1abc9c; 
+    margin:0.2rem 0; 
+    font-size:2.5rem; /* Bigger Admin Panel title */
+    font-weight:bold; 
+}
+
+.top-nav-links ul {
+    list-style:none;
+    display:flex;
+    padding:0;
+    margin:0.5rem 0 0 0; /* Spacing under the title */
+    gap:1rem;
+    flex-wrap: wrap;
+    justify-content:center; /* Center links horizontally */
+}
+
+.top-nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration:none;
+    padding:0.7rem 1.2rem;
+    border-radius:5px;
+    transition: all 0.3s ease;
+    font-weight:bold;
+}
+.top-nav-links a:hover, .top-nav-links a.active {
+    background-color:#1abc9c;
+    color:white;
+}
+
+/* Main Content */
+.main-content {
+    padding:2rem;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    text-align:center;
+    margin-bottom:2rem;
+}
+.dashboard-header h2 { color:#1abc9c; margin-bottom:0.3rem; }
+.dashboard-header p { color:#555; }
+
+/* Stats Grid */
+.stats-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1rem;
+    margin-bottom:2rem;
+}
+.stats-grid .card {
+    background:white;
+    padding:1.2rem;
+    border-radius:8px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    text-align:center;
+    transition: transform 0.2s ease;
+}
+.stats-grid .card:hover { transform: translateY(-4px); }
+.stat .icon { font-size:1.5rem; margin-bottom:0.3rem; }
+
+/* Features / AI Section */
+.section-title { color:#1abc9c; margin:1.5rem 0 1rem; font-weight:bold; }
+.features-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:1rem;
+    margin-bottom:2rem;
+}
+.feature-card {
+    background:white;
+    border-radius:8px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    text-align:center;
+    padding:1rem;
+}
+.feature-card img {
+    width:100%;
+    height:140px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:0.8rem;
+}
+.feature-card h4 { color:#1abc9c; margin-bottom:0.5rem; }
+.feature-card p { color:#555; font-size:0.9rem; }
+
+/* Analytics / Bar Chart */
+.bar-chart {
+    display:flex;
+    justify-content:space-around;
+    align-items:flex-end;
+    height:250px;
+    background:white;
+    padding:1rem;
+    border-radius:8px;
+    gap:1rem;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+.bar-chart .bar {
+    width:50px;
+    height:calc(var(--value)*2px);
+    background:#1abc9c;
+    border-radius:8px 8px 0 0;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+}
+.bar-chart .bar::after {
+    content: attr(data-label);
+    position:absolute;
+    bottom:-1.5rem;
+    font-size:0.85rem;
+    color:#333;
+}
+</style>
+{% endblock %}
