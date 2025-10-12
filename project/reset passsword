@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align:center;">Reset Password</h2>
+
+<form method="post" class="card" style="max-width:400px;margin:20px auto;padding:20px;">
+  <label>New Password <input type="password" name="password" required style="width:100%;"></label>
+  <button class="btn" type="submit" style="width:100%;">Reset Password</button>
+</form>
+{% endblock %}
