@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Delivery Boy</h2>
+
+<form method="post" class="card">
+  <label>Name <input type="text" name="name" value="{{ delivery.name }}" required></label>
+  <label>Phone <input type="text" name="phone" value="{{ delivery.phone or '' }}"></label>
+  <label>Address <input type="text" name="address" value="{{ delivery.address or '' }}"></label>
+  <label>Status
+    <select name="status">
+      <option value="active" {% if delivery.status == 'active' %}selected{% endif %}>Active</option>
+      <option value="inactive" {% if delivery.status == 'inactive' %}selected{% endif %}>Inactive</option>
+    </select>
+  </label>
+  <label>Password (leave blank to keep current) <input type="password" name="password"></label>
+  <button class="btn" type="submit">Save Changes</button>
+</form>
+{% endblock %}

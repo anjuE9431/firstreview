@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Edit Fish</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="form-box">
+        <div>
+            <label for="name">Fish Name</label>
+            <input type="text" id="name" name="name" value="{{ fish.name }}" required>
+        </div>
+
+        <div>
+            <label for="price">Price (₹)</label>
+            <input type="number" id="price" name="price" step="0.01" value="{{ fish.price }}" required>
+        </div>
+
+        <div>
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" name="stock" value="{{ fish.stock }}" required>
+        </div>
+
+        <div>
+            <label for="harbour_id">Harbour</label>
+            <select name="harbour_id" id="harbour_id" required>
+                {% for h in harbours %}
+                    <option value="{{ h.id }}" {% if h.id == fish.harbour_id %}selected{% endif %}>
+                        {{ h.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="image">Fish Image</label>
+            {% if fish.image %}
+                <div style="margin-bottom:10px;">
+                    <img src="{{ url_for('static', filename='uploads/fish/' ~ fish.image) }}" 
+                         alt="{{ fish.name }}" style="width:120px; height:90px; object-fit:cover;">
+                    <p>Current Image</p>
+                </div>
+            {% endif %}
+            <input type="file" id="image" name="image" accept="image/*">
+            <small>(Leave blank to keep current image)</small>
+        </div>
+
+        <button type="submit" class="btn">Update Fish</button>
+        <a href="{{ url_for('admin_fish') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

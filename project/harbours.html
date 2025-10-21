@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-light mb-4">Manage Harbours</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <a href="{{ url_for('add_harbour') }}" class="btn btn-success mb-3">+ Add New Harbour</a>
+
+
+  <!-- Active Harbours -->
+  <h4 class="text-info mt-4">Active Harbours</h4>
+  <table class="table table-dark table-hover align-middle mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Contact</th>
+        <th>Owner</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for h in harbours %}
+      <tr>
+        <td>{{ h.id }}</td>
+        <td>{{ h.name }}</td>
+        <td>{{ h.location }}</td>
+        <td>{{ h.contact }}</td>
+        <td>{{ h.owner or '—' }}</td>
+        <td>
+          <form action="{{ url_for('admin_delete_harbour', hid=h.id) }}" method="post" style="display:inline;">
+            <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to deactivate this harbour?');">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="text-center text-muted">No active harbours found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <hr class="border-light my-5">
+
+  <!-- Inactive Harbours -->
+  <h4 class="text-secondary">Inactive Harbours</h4>
+  <table class="table table-sm table-striped table-bordered table-dark mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Contact</th>
+        <th>Owner</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for h in inactive_harbours %}
+      <tr class="opacity-75">
+        <td>{{ h.id }}</td>
+        <td>{{ h.name }}</td>
+        <td>{{ h.location }}</td>
+        <td>{{ h.contact }}</td>
+        <td>{{ h.owner or '—' }}</td>
+        <td>
+          <form action="{{ url_for('admin_restore_harbour', hid=h.id) }}" method="post" style="display:inline;">
+            <button class="btn btn-success btn-sm">Restore</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="text-center text-muted">No inactive harbours.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

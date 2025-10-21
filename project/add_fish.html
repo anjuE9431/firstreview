@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Add New Fish</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    <div class="form-group mb-3">
+      <label>Fish Name</label>
+      <input type="text" name="name" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Price (₹)</label>
+      <input type="number" step="0.01" name="price" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Stock Quantity</label>
+      <input type="number" name="stock" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Assign Harbour</label>
+      <select name="harbour_id" class="form-control" required>
+        <option value="">Select Harbour</option>
+        {% for harbour in harbours %}
+          <option value="{{ harbour.id }}">{{ harbour.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Upload Image</label>
+      <input type="file" name="image" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Fish</button>
+    <a href="{{ url_for('admin_fish') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

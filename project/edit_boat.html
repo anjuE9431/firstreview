@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Edit Boat</h2>
+
+    <form method="POST" class="form-box">
+        <div>
+            <label for="name">Boat Name</label>
+            <input type="text" id="name" name="name" value="{{ boat.name }}" required>
+        </div>
+
+        <div>
+            <label for="capacity">Capacity</label>
+            <input type="number" id="capacity" name="capacity" value="{{ boat.capacity }}" required>
+        </div>
+
+        <div>
+            <label for="harbour_id">Harbour</label>
+            <select id="harbour_id" name="harbour_id" required>
+                {% for h in harbour_list %}
+                    <option value="{{ h.id }}" {% if h.id == boat.harbour_id %}selected{% endif %}>
+                        {{ h.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn">Update Boat</button>
+        <a href="{{ url_for('admin_boats') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

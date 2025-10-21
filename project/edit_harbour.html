@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Edit Harbour</h2>
+
+    <form method="POST" class="form-box">
+        <div>
+            <label for="name">Harbour Name</label>
+            <input type="text" id="name" name="name" value="{{ harbour.name }}" required>
+        </div>
+
+        <div>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" value="{{ harbour.location }}" required>
+        </div>
+
+        <div>
+            <label for="contact">Contact</label>
+            <input type="text" id="contact" name="contact" value="{{ harbour.contact }}" required>
+        </div>
+
+        <div>
+            <label for="owner_id">Owner</label>
+            <select name="owner_id" id="owner_id" required>
+                {% for o in owners %}
+                    <option value="{{ o.id }}" {% if o.id == harbour.user_id %}selected{% endif %}>
+                        {{ o.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn">Update Harbour</button>
+        <a href="{{ url_for('admin_harbours') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

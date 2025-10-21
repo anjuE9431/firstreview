@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="users-container">
+  <h2>All Users</h2>
+  <div class="table-wrapper">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Phone</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for x in users %}
+        <tr>
+          <td>{{ x.id }}</td>
+          <td>{{ x.name }}</td>
+          <td>{{ x.email }}</td>
+          <td>{{ x.role }}</td>
+          <td>{{ x.phone or '' }}</td>
+          <td>{{ x.address or '' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #1e1e2f; /* admin dashboard dark background */
+  color: #e0e0e0;
+  margin: 0;
+  padding: 20px;
+}
+
+.users-container {
+  max-width: 1000px;
+  margin: 50px auto;
+}
+
+.users-container h2 {
+  color: #00bcd4; /* dashboard accent color */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #2c2c3e; /* dark card background */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.users-table thead {
+  background: #00bcd4; /* accent header */
+  color: #1e1e2f;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.users-table tbody tr:hover {
+  background: #3a3a4e; /* row hover effect */
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.users-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media screen and (max-width: 768px) {
+  .users-table th,
+  .users-table td {
+    padding: 10px 8px;
+  }
+}
+</style>
+{% endblock %}

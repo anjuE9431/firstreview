@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="complaints-container">
+  <h2>🌊 Complaints Management</h2>
+  <div class="table-wrapper">
+    <table class="complaints-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Reply</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in items %}
+        <tr>
+          <td>{{ c.id }}</td>
+          <td>{{ c.user_name }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.message }}</td>
+          <td>{{ c.reply or 'No reply yet' }}</td>
+          <td>
+            <form method="post" class="reply-form">
+              <input type="hidden" name="complaint_id" value="{{ c.id }}">
+              <input type="text" name="reply" placeholder="Type reply..." required>
+              <button class="btn">Send</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+/* === Ocean Theme for Complaints === */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #001f3f, #004e92); /* deep ocean gradient */
+  color: #e0f7fa;
+  margin: 0;
+  padding: 30px;
+}
+
+.complaints-container {
+  max-width: 1100px;
+  margin: 60px auto;
+}
+
+.complaints-container h2 {
+  color: #4fc3f7;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  text-shadow: 0 0 10px #0288d1;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Table design */
+.complaints-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.complaints-table thead {
+  background: linear-gradient(90deg, #0288d1, #00bcd4);
+  color: #012a4a;
+}
+
+.complaints-table th,
+.complaints-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.complaints-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.complaints-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.complaints-table tbody tr:hover {
+  background: rgba(0, 188, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Reply form */
+.reply-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.reply-form input[type="text"] {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.15);
+  color: #e0f7fa;
+}
+
+.reply-form input::placeholder {
+  color: #a7d8f0;
+}
+
+.btn {
+  background: linear-gradient(135deg, #00bcd4, #0288d1);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #4fc3f7, #01579b);
+  transform: scale(1.05);
+}
+
+/* Scrollbar */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #0288d1;
+  border-radius: 8px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .complaints-table th,
+  .complaints-table td {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
+  .complaints-container h2 {
+    font-size: 1.6rem;
+  }
+}
+</style>
+{% endblock %}
