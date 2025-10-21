@@ -1,42 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <h2>{{ harbour.name }} - Available Fish</h2>
+<div class="container mt-4">
+  <h2 class="mb-3">Fish Management</h2>
 
-    {% if fish %}
-    <div class="cards">
-        {% for f in fish %}
-        <div class="card">
-            <!-- Fish Image -->
-            {% if f.image %}
-                <img src="{{ url_for('static', filename='uploads/fish/' ~ f.image) }}" alt="{{ f.name }}"  width="50" height="70">
-            {% else %}
-                <img src="{{ url_for('static', filename='default_fish.jpg') }}" alt="No Image" width="50" height="70">
-            {% endif %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, msg in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <a href="{{ url_for('add_fish') }}" class="btn btn-success mb-3">+ Add New Fish</a>
 
-            <div class="info">
-                <h3>{{ f.name }}</h3>
-                <p class="price">{{ f.price|inr }}</p>
-                <p>Stock: {{ f.stock }}</p>
 
-                <!-- Add to Cart Form -->
-                <form method="POST" action="{{ url_for('add_to_cart') }}">
-                    <input type="hidden" name="fish_id" value="{{ f.id }}">
-                    <input type="number" name="quantity" min="1" max="{{ f.stock }}" value="1" required>
-                    
-                    <!-- Cleaning option -->
-                    <label>
-                        <input type="checkbox" name="clean" value="yes"> Clean (+₹100)
-                    </label>
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price (₹)</th>
+        <th>Stock</th>
+        <th>Harbour</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in fish_list %}
+      <tr>
+        <td>{{ f.id }}</td>
+        <td>{{ f.name }}</td>
+        <td>{{ "%.2f"|format(f.price) }}</td>
+        <td>{{ f.stock }}</td>
+        <td>{{ f.harbour_name }}</td>
+        <td>
+          {% if f.image %}
+            <img src="{{ url_for('static', filename='uploads/fish/' ~ f.image) }}" alt="{{ f.name }}" width="70" height="50">
+          {% else %}
+            <span class="text-muted">No image</span>
+          {% endif %}
+        </td>
+        <td>
+           <a href="{{ url_for('admin_edit_fish', fid=f.id) }}" class="btn btn-sm btn-primary">Edit</a>
 
-                    <button type="submit" class="btn">Add to Cart</button>
-                </form>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-        <p>No fish available in this harbour.</p>
-    {% endif %}
+            <form action="{{ url_for('delete_fish', fid=f.id) }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-danger"
+             onclick="return confirm('Are you sure you want to delete {{ f.name }}?');">
+              Delete
+            </button>
+            </form>
+        </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

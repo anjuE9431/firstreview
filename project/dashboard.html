@@ -1,120 +1,167 @@
 {% extends "base.html" %}
 {% block content %}
+
 <style>
   body {
-    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    margin: 0;
     font-family: "Poppins", sans-serif;
-    color: #1a3c40;
+    background: radial-gradient(circle at 30% 30%, #001220, #000a14 80%);
+    color: #e0f7fa;
+    overflow-x: hidden;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    padding: 50px 20px 20px;
+    position: relative;
+  }
+
+  .dashboard-header::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 4px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00bcd4, #80deea);
   }
 
   h2 {
-    text-align: center;
-    font-size: 2.2rem;
-    color: #004d61;
+    font-size: 2.7rem;
     font-weight: 700;
-    margin: 2rem 0;
-    letter-spacing: 1px;
+    color: #4dd0e1;
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 20px 40px;
+  .hero-img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 30px auto;
+    display: block;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
   }
 
-  .card {
-    background: #ffffff;
+  .stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 50px auto;
+    max-width: 1100px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, rgba(0,150,136,0.15), rgba(0,188,212,0.08));
+    border: 1px solid rgba(0,255,255,0.15);
     border-radius: 16px;
-    box-shadow: 0 5px 20px rgba(0, 77, 97, 0.2);
-    padding: 25px;
+    padding: 30px 25px;
     text-align: center;
-    transition: all 0.3s ease;
+    width: 230px;
+    transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
   }
 
-  .card::before {
-    content: "";
-    position: absolute;
-    top: -60px;
-    left: -60px;
-    width: 150px;
-    height: 150px;
-    background: rgba(0, 150, 199, 0.1);
-    border-radius: 50%;
-    z-index: 0;
-  }
-
-  .card h3 {
-    color: #006994;
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .card p {
-    color: #333;
-    font-size: 1rem;
-    margin-bottom: 15px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .card hr {
-    border: 0;
-    height: 1px;
-    background: #d1ecf1;
-    margin: 15px 0;
-  }
-
-  .card:hover {
+  .stat-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0, 77, 97, 0.3);
+    background: linear-gradient(135deg, rgba(0,188,212,0.3), rgba(0,255,255,0.1));
+    box-shadow: 0 8px 25px rgba(0,255,255,0.25);
+  }
+
+  .stat-card .emoji {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+
+  .stat-card b {
+    display: block;
+    font-size: 2rem;
+    color: #ffeb3b;
+  }
+
+  .stat-card span {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 60px;
   }
 
   .btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #00b4db, #0083b0);
-    color: white;
+    background: linear-gradient(135deg, #00838f, #00acc1);
+    color: #fff;
     text-decoration: none;
+    padding: 14px 26px;
+    border-radius: 30px;
     font-weight: 600;
-    padding: 10px 16px;
-    border-radius: 8px;
-    transition: background 0.3s ease, transform 0.2s ease;
-    margin: 6px 5px;
-    position: relative;
-    z-index: 2;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0,188,212,0.35);
   }
 
   .btn:hover {
-    background: linear-gradient(135deg, #0083b0, #00b4db);
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #00bcd4, #26c6da);
+    box-shadow: 0 8px 25px rgba(0,255,255,0.45);
   }
 
-  @media (max-width: 768px) {
-    .grid {
-      padding: 15px;
-    }
-    h2 {
-      font-size: 1.8rem;
-    }
+  footer {
+    text-align: center;
+    color: #80deea;
+    padding: 20px 10px;
+    font-size: 0.9rem;
   }
+
+  /* Floating Fish Icons */
+  .floating {
+    position: absolute;
+    width: 60px;
+    opacity: 0.15;
+    animation: floatFish 20s linear infinite;
+  }
+
+  @keyframes floatFish {
+    0% { transform: translateX(-150px) translateY(0); }
+    50% { transform: translateX(50vw) translateY(-20px); }
+    100% { transform: translateX(100vw) translateY(0); }
+  }
+
+  .fish2 { top: 70%; animation-delay: -10s; width: 80px; }
 </style>
 
-<h2>⚓ Browse Harbours</h2>
-<div class="grid">
-  {% for h in harbours %}
-  <div class="card">
-    <h3>{{ h.name }}</h3>
-    <p><strong>Location:</strong> {{ h.location }}</p>
-    <hr>
-    <h3>Support</h3>
-    <a class="btn" href="{{ url_for('complaint') }}">✉️ Write a Complaint</a>
-    <a class="btn" href="{{ url_for('feedback') }}">💬 Give Feedback</a>
-    <a class="btn" href="{{ url_for('view_fish', harbour_id=h.id) }}">🐟 View Fish</a>
-  </div>
-  {% endfor %}
+<div class="dashboard-header">
+  <h2>🐟 Admin Dashboard — Deep Sea Market</h2>
+  <img class="hero-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80" alt="Fish Market">
 </div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="floating" style="top:30%;" alt="fish">
+<img src="https://cdn-icons-png.flaticon.com/512/616/616554.png" class="floating fish2" alt="fish2">
+
+<div class="stats-container">
+  <div class="stat-card"><div class="emoji">👥</div><b>{{ users_count }}</b><span>Users</span></div>
+  <div class="stat-card"><div class="emoji">⚓</div><b>{{ harbours_count }}</b><span>Harbours</span></div>
+  <div class="stat-card"><div class="emoji">🐠</div><b>{{ fish_count }}</b><span>Fish Types</span></div>
+  <div class="stat-card"><div class="emoji">📦</div><b>{{ orders_count }}</b><span>Orders</span></div>
+</div>
+
+<div class="btn-container">
+  <a class="btn" href="{{ url_for('admin_users') }}">👥 Manage Users</a>
+  <a class="btn" href="{{ url_for('admin_harbours') }}">⚓ Manage Harbours</a>
+  <a class="btn" href="{{ url_for('admin_boats') }}">🚤 Manage Boats</a>
+  <a class="btn" href="{{ url_for('admin_fish') }}">🐟 Manage Fish</a>
+  <a class="btn" href="{{ url_for('admin_feedback') }}">💬 View Feedback</a>
+  <a class="btn" href="{{ url_for('admin_complaints') }}">📨 Complaints & Reply</a>
+  <a class="btn" href="{{ url_for('admin_delivery') }}">🚚 Delivery Management</a>
+</div>
+
+<footer>© {{ year if year else "2025" }} FreshCatch Admin — Bringing the Harbour Closer 🌊</footer>
+
 {% endblock %}
