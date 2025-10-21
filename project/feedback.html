@@ -1,136 +1,154 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="feedback-container">
-  <h2>🌊 Feedback Overview</h2>
-  <div class="table-wrapper">
-    <table class="feedback-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>User</th>
-          <th>Rating</th>
-          <th>Message</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for x in items %}
-        <tr>
-          <td>{{ x.id }}</td>
-          <td>{{ x.user_name }}</td>
-          <td>{{ x.rating }}</td>
-          <td>{{ x.message or '' }}</td>
-          <td>{{ x.created_at }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
-
 <style>
-/* 🌊 Ocean Wave Theme */
 body {
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #001f3f, #005f73, #0a9396);
-  color: #e0f7fa;
-  margin: 0;
-  padding: 20px;
-  min-height: 100vh;
-  animation: gradientShift 8s ease-in-out infinite alternate;
+    background: linear-gradient(135deg, #013a63, #03506f, #0077b6);
+    font-family: "Poppins", sans-serif;
+    color: #edf6f9;
 }
 
-@keyframes gradientShift {
-  0% { background: linear-gradient(135deg, #001f3f, #005f73, #0a9396); }
-  100% { background: linear-gradient(135deg, #003566, #0077b6, #00b4d8); }
+h2 {
+    text-align: center;
+    color: #caf0f8;
+    font-weight: 700;
+    margin: 2rem 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
-.feedback-container {
-  max-width: 1000px;
-  margin: 60px auto;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+/* Form Card */
+.card {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    padding: 25px 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.feedback-container h2 {
-  text-align: center;
-  color: #90e0ef;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 25px;
-  text-shadow: 0 0 8px #00b4d8, 0 0 16px #48cae4;
+.card label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #edf6f9;
 }
 
-.table-wrapper {
-  overflow-x: auto;
-  border-radius: 12px;
-}
-
-.feedback-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.feedback-table thead {
-  background: rgba(0, 180, 216, 0.9);
-  color: #001219;
-}
-
-.feedback-table th,
-.feedback-table td {
-  padding: 14px 18px;
-  text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.feedback-table th {
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-}
-
-.feedback-table tbody tr {
-  transition: background 0.3s, transform 0.3s;
-}
-
-.feedback-table tbody tr:hover {
-  background: rgba(0, 255, 255, 0.15);
-  transform: scale(1.01);
-  cursor: pointer;
-}
-
-.feedback-table td:nth-child(3) {
-  color: #ffea00;
-  font-weight: 700;
-}
-
-.feedback-table td:nth-child(2) {
-  color: #fffbeb;
-  font-weight: 600;
-}
-
-.feedback-table td:nth-child(4) {
-  color: #caf0f8;
-}
-
-.feedback-table td:nth-child(5) {
-  color: #ade8f4;
-}
-
-@media (max-width: 768px) {
-  .feedback-container {
-    padding: 20px;
-  }
-  .feedback-table th, .feedback-table td {
-    padding: 10px;
+.card select, .card textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #00b4db;
+    background: rgba(255,255,255,0.1);
+    color: #edf6f9;
     font-size: 14px;
-  }
+    margin-top: 5px;
+    transition: all 0.3s ease;
+}
+
+.card select:focus, .card textarea:focus {
+    border-color: #00b4db;
+    box-shadow: 0 0 10px rgba(0,180,219,0.5);
+    outline: none;
+    background: rgba(255,255,255,0.15);
+}
+
+.card .btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card .btn:hover {
+    background: linear-gradient(135deg, #0083b0, #00b4db);
+    transform: scale(1.02);
+}
+
+/* Table Styling */
+.table {
+    max-width: 90%;
+    margin: 0 auto 50px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    color: #edf6f9;
+}
+
+.table thead {
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0,180,219,0.15);
+    transition: all 0.3s ease;
+}
+
+/* Stars */
+.star {
+    color: #ffd700; /* gold */
+    font-size: 16px;
+    margin-right: 2px;
 }
 </style>
+
+<h2>📝 Feedback</h2>
+
+<form method="post" class="card">
+  <label for="rating">Rating</label>
+  <select id="rating" name="rating" required>
+    <option value="" disabled selected>Select rating</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="1">⭐</option>
+  </select>
+
+  <label for="message">Message</label>
+  <textarea id="message" name="message" rows="3" placeholder="Write your feedback..."></textarea>
+
+  <button type="submit" class="btn">Send</button>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Rating</th>
+      <th>Message</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in items %}
+    <tr>
+      <td>#{{ f.id }}</td>
+      <td>
+        {% for i in range(f.rating|int) %}
+        <span class="star">★</span>
+        {% endfor %}
+        {% for i in range(5 - f.rating|int) %}
+        <span class="star" style="color:#555;">★</span>
+        {% endfor %}
+      </td>
+      <td>{{ f.message or '-' }}</td>
+      <td>{{ f.created_at.strftime("%d %b %Y") if f.created_at else '-' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

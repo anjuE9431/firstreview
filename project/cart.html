@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+body {
+    background: linear-gradient(135deg, #013a63, #03506f, #0077b6);
+    font-family: "Poppins", sans-serif;
+    color: #edf6f9;
+}
+
+/* Page Title */
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 2rem 0;
+    color: #caf0f8;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Table Styling */
+.table {
+    width: 90%;
+    margin: 0 auto 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    color: #edf6f9;
+    text-align: center;
+}
+
+.table thead {
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0,180,219,0.15);
+    transition: all 0.3s ease;
+}
+
+/* Button Styling */
+.btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #0083b0, #00b4db);
+    transform: scale(1.02);
+}
+
+/* Empty Cart Message */
+.empty-cart {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 50px 0;
+    color: #caf0f8;
+}
+</style>
+
+<h2>🛒 Your Cart</h2>
+
+{% if not items %}
+<div class="empty-cart">
+    Your cart is empty! Start adding some fresh fish 🐟.
+    <br>
+    <a href="{{ url_for('view_fish', harbour_id=1) }}" class="btn">Browse Fish</a>
+</div>
+{% else %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fish</th>
+            <th>Quantity</th>
+            <th>Cleaning</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for it in items %}
+        <tr>
+            <td>{{ it.fish.name }}</td>
+            <td>{{ it.qty }}</td>
+            <td>
+                {% if it.clean %}
+                <span style="color:#00b894;font-weight:600;">Yes (+₹100)</span>
+                {% else %}
+                <span style="color:#ffe66d;font-weight:600;">No</span>
+                {% endif %}
+            </td>
+            <td class="fw-bold">{{ it.amount|inr }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3" style="text-align:right;">Total</th>
+            <th>{{ total|inr }}</th>
+        </tr>
+    </tfoot>
+</table>
+
+<form method="post" action="{{ url_for('checkout') }}">
+    <button class="btn">Proceed to Checkout 🛒</button>
+</form>
+{% endif %}
+{% endblock %}
